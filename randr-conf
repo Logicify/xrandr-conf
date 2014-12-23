@@ -1,3 +1,4 @@
 #!/bin/sh
-cd "$(dirname "$0")"
+APP_EXECUTABLE=`readlink -f $0`
+cd $(dirname "$APP_EXECUTABLE")
 python randr-conf.py $@
