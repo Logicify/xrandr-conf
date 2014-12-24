@@ -1,6 +1,8 @@
 import logging
 import pkgutil
-from errors import InitializationError
+
+from src.errors import InitializationError
+
 
 __author__ = 'corvis'
 

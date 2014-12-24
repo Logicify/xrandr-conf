@@ -107,8 +107,8 @@ class ConfigureDisplaysExecutor(Executor):
                 xrandr_conf += self.create_xrandr_screen_for_display(display,
                                                                      self.preprocess_user_object(config_def,
                                                                                                  local_context)) + ' '
-        print xrandr_conf
-        #run_xrandr_command(xrandr_conf)
+        #print xrandr_conf
+        run_xrandr_command(xrandr_conf)
 
 
 registry.register(ConfigureDisplaysExecutor)

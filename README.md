@@ -1,4 +1,74 @@
 xrandr-conf
 ===========
 
-Simple utility for managing managing different xrandr configurations with ease 
+Simple utility DE independent for managing managing different system configurations depending on conditions.
+
+Typical use case
+----------------
+
+Let's imagine you have a few different monitor configurations in various locations:
+
+ 1. At home you have one monitor connected to HDMI port of your laptop
+ 1. At the office you have dock station with 2 monitors connected
+ 1. Also you often need to disconnect all external displays and use just laptop's screen
+  
+Reconfiguring with ```xrandr``` each time you change location can be really annoying especially if you have more 
+then 3 options.
+
+The Idea
+--------
+
+Basically all you need is to define how exactly you would like to configure your devices depending on 
+_current system state_.
+Let's call this **Profile**. Profile contains of 2 parts: conditions which must be satisfied to activate this profile 
+and actual system configuration which should be applied when profile is activated. 
+xrandr-conf will find suitable profiles for current system state and apply configuration for each one.
+
+Let's look on the xrandr-conf configuration file which defines profiles for examples from previous section.
+
+```yaml
+profiles:
+  SingleExternalMonitor:
+    when:
+      connected-only: "eDP1, HDMI1"
+    then:
+      - configure-displays:
+          "*":
+            state: "off"
+          HDMI1:
+            mode: '$preferredResolution'
+  InternalDisplayOnly:
+    when:
+      connected-only: "eDP1"
+    then:
+      - configure-displays:
+          "*":
+            state: "off"
+          eDP1:
+            auto: true
+  2Monitors:
+    when:
+      connected: "eDP1, HDMI1, HDMI2"
+    then:
+      - configure-displays:
+          "*":
+            state: "off"
+          HDMI1:
+            mode: "1920x1080"
+            position: '0x0'
+            primary: true
+          HDMI2:
+            mode: "1920x1080"
+            position: 'right-of HDMI1'
+            primary: true
+```
+
+Disclaimer
+----------
+
+This software is in very early stage. Documentation is not ready yet as well as many of the features which should be ready.
+However any feedback is more than appreciated.
+
+Credits
+-------
+Dmitry Berezovsky, Logicify (http://logicify.com/)

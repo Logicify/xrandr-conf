@@ -2,7 +2,9 @@ import copy
 import logging
 import pkgutil
 import re
-from errors import InitializationError
+
+from src.errors import InitializationError
+
 
 __author__ = 'corvis'
 

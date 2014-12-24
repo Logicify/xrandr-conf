@@ -1,6 +1,8 @@
 import subprocess
 import re
-from domain import Screen, Display, SystemState, DisplayMode
+
+from src.domain import Screen, Display, SystemState, DisplayMode
+
 
 __author__ = 'corvis'
 

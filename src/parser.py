@@ -1,8 +1,11 @@
 from collections import OrderedDict
+
 import yaml
-from conditions import registry as conditions_registry
+
+from src.conditions import registry as conditions_registry
 from executors import registry as executors_registry
 from domain import Profile, Configuration
+
 
 __author__ = 'corvis'
 
