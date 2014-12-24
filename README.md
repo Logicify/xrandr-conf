@@ -1,7 +1,7 @@
 xrandr-conf
 ===========
 
-Simple utility DE independent for managing managing different system configurations depending on conditions.
+Simple DE independent utility for managing managing different system configurations depending on conditions.
 
 Typical use case
 ----------------
@@ -62,6 +62,13 @@ profiles:
             position: 'right-of HDMI1'
             primary: true
 ```
+
+Usage
+-----
+
+1. The first thing you need is config file describing your profiles (Documentation is not available yet, sorry)
+2. Run ```xrandr-conf``` each time you need to change profile or add _udev_ rule call it automatically.
+3. Optionally bind some global keyboard hotkey to run ```xrandr-conf``` executable. This can be pretty handy.
 
 Disclaimer
 ----------
