@@ -20,7 +20,7 @@ if __name__ == '__main__':
         print "Initialization error:" + e.message
         exit(1)
     try:
-        configuration = parser.parse_config(file('./config.yaml', 'r'))
+        configuration = parser.parse_config(file('./config-example.yaml', 'r'))
     except InitializationError as e:
         print "Config error: " + e.message
         exit(2)
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     if len(matching_profiles) > 0:
         profile = matching_profiles[0]
         print "Applying profile {}...".format(profile.name)
-        res = processor.activate_profile(matching_profiles[0], configuration)
+        res = processor.activate_profile(matching_profiles[0], configuration, system_state)
         if res:
             print "Profile {}:\tACTIVATED".format(profile.name)
         else:

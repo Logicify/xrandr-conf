@@ -37,15 +37,16 @@ def find_matching_profiles(system_state, configuration):
     return res
 
 
-def activate_profile(profile, configuration, error_handling_mode=ERROR_HANDLING_MODE_IGNORE):
+def activate_profile(profile, configuration, system_state, error_handling_mode=ERROR_HANDLING_MODE_IGNORE):
     """
     Invokes all executors for given profile
     :type profile: Executor
+    :type system_state: domain.SystemState
     :type configuration: domain.Configuration
     """
     for executor in profile.executors:
         try:
-            executor.execute(configuration)
+            executor.execute(configuration, system_state)
         except Exception as e:
             __logger.exception("Executor failed: " + e.message, e)
             if error_handling_mode == ERROR_HANDLING_MODE_IGNORE:

@@ -13,7 +13,12 @@ class Executor(object):
         instance = cls(ref_name, definition)
         return instance
 
-    def execute(self, configuration):
+    def execute(self, configuration, system_state):
+        """
+        :type configuration: domain.Configuration
+        :type system_state: domain.SystemState
+        :return:
+        """
         pass
 
 

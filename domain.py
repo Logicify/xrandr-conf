@@ -20,6 +20,13 @@ class Screen(object):
     def get_connected_displays(self):
         return [x for x in self.displays if x.is_connected]
 
+    def get_displays_by_wildcard(self, wildcard):
+        res = []
+        for x in self.displays:
+            if wildcard.strip() == '*' or x.id == wildcard:
+                res.append(x)
+        return res
+
     def get_display(self, id):
         """
         Get display by id
