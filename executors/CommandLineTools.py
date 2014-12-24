@@ -22,11 +22,15 @@ class XrandrExecutor(Executor):
     name = "xrandr"
 
     def __init__(self, ref_name, definition):
+        super(XrandrExecutor, self).__init__()
         self.cmd_options = definition
 
     def execute(self, configuration, system_state):
+        super(XrandrExecutor, self).execute(configuration, system_state)
         cmd_string = ' '.join([self.xrandrExecutable, self.cmd_options])
         run_xrandr_command(cmd_string)
+
+
 registry.register(XrandrExecutor)
 
 
@@ -36,6 +40,7 @@ class ConfigureDisplaysExecutor(Executor):
     DISPLAY_POSITION_REGEX = re.compile('(?P<location>left\-of|right\-of|below|above)\s+(?P<id>[\w\d]+)')
 
     def __init__(self, ref_name, definition):
+        super(ConfigureDisplaysExecutor, self).__init__()
         self.definition = definition
 
     def create_xrandr_screen_for_display(self, display, config_def):
@@ -70,19 +75,33 @@ class ConfigureDisplaysExecutor(Executor):
             res.append('--auto')
         return ' '.join(res)
 
+    def initialize_context(self, configuration, system_state):
+        # this one expects to have "current_display" in context
+        self.register_preprocessor('preferredResolution',
+                                   lambda arg, context: context.get('current_display').preferred_mode.resolution)
+
+
     def execute(self, configuration, system_state):
         """
         :type configuration: domain.Configuration
         :type system_state: domain.SystemState
         :return:
         """
+        super(ConfigureDisplaysExecutor, self).execute(configuration, system_state)
         xrandr_conf = ''
         # We expect to get the list of devices
         for display_selector, config_def in self.definition.items():
             displays = system_state.default_screen.get_displays_by_wildcard(display_selector)
             for display in displays:
-                xrandr_conf += self.create_xrandr_screen_for_display(display, config_def) + ' '
-        run_xrandr_command(xrandr_conf)
+                local_context = {
+                    "current_display": display
+                }
+                xrandr_conf += self.create_xrandr_screen_for_display(display,
+                                                                     self.preprocess_user_object(config_def,
+                                                                                                 local_context)) + ' '
+        print xrandr_conf
+        #run_xrandr_command(xrandr_conf)
+
 
 registry.register(ConfigureDisplaysExecutor)
 

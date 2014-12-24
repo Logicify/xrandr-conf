@@ -8,7 +8,7 @@ __author__ = 'corvis'
 class Detector(object):
     __REGEX_SCREEN_LINE = re.compile('Screen (?P<id>\d+)')
     __REGEX_DISPLAY_LINE = re.compile('(?P<id>[\w\d]+) (?P<con>connected|disconnected)\s?(?P<primary>primary)?\s?((?P<resolution>\d+x\d+)?\+(?P<left>\d+)\+(?P<top>\d+))?')
-    __REGEX_MODE_LINE = re.compile('\s+(?P<resolution>\d+x\d+)\s+(?P<rate>\d+\.\d+)\s?(?P<mod>[+\*])?')
+    __REGEX_MODE_LINE = re.compile('\s+(?P<resolution>\d+x\d+)\s+(?P<rate>\d+\.\d+)\s*(?P<mod>[+\*]+)?')
 
     def __init__(self,):
         self.xrandrExecutable = 'xrandr'

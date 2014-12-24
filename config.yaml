@@ -7,7 +7,7 @@ profiles:
           "*":
             state: "off"
           HDMI1:
-            auto: true
+            mode: '$preferredResolution'
   InternalDisplayOnly:
     when:
       connected-only: "eDP1"
