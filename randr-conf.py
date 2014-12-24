@@ -1,18 +1,17 @@
 import logging
 import logging.config
 import yaml
-import conditions
-from detector import Detector
-from errors import InitializationError
-import executors
-import parser
-import processor
 
 __author__ = 'corvis'
 
-
 if __name__ == '__main__':
     logging.config.dictConfig(yaml.load(file('./logger.yaml', 'r')))
+    import executors
+    import conditions
+    import parser
+    import processor
+    from detector import Detector
+    from errors import InitializationError
     try:
         conditions.registry.autodiscover()
         executors.registry.autodiscover()

@@ -35,6 +35,14 @@ registry.register(XrandrExecutor)
 
 
 class ConfigureDisplaysExecutor(Executor):
+    """
+    Provides following context variables:
+    Expected config:
+        <device wildcard>:
+            <device configuration options> - see create_xrandr_screen_for_display docs for details
+    On display section level:
+        * $preferredResolution - preferred resolution of the gi
+    """
     name = "configure-displays"
     COORDS_REGEX = re.compile('^\d+x\d+$')
     DISPLAY_POSITION_REGEX = re.compile('(?P<location>left\-of|right\-of|below|above)\s+(?P<id>[\w\d]+)')
