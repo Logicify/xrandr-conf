@@ -4,22 +4,29 @@ import re
 
 __author__ = 'corvis'
 
+XRANDR_EXECUTABLE = 'xrandr'
+
+
+def run_xrandr_command(args):
+    cmd_string = ' '.join([XRANDR_EXECUTABLE, args])
+    p = subprocess.Popen(cmd_string, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p.wait()
+    errors = '\n'.join(p.stderr.readline()).strip()
+    res = p.stdout.readline()
+    if len(errors) > 0:
+        raise Exception(errors)
+    return True
+
 
 class XrandrExecutor(Executor):
     name = "xrandr"
 
     def __init__(self, ref_name, definition):
         self.cmd_options = definition
-        self.xrandrExecutable = 'xrandr'
 
     def execute(self, configuration, system_state):
         cmd_string = ' '.join([self.xrandrExecutable, self.cmd_options])
-        p = subprocess.Popen(cmd_string, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        p.wait()
-        errors = '\n'.join(p.stderr.readline()).strip()
-        res = p.stdout.readline()
-        if len(errors) > 0:
-            raise Exception(errors)
+        run_xrandr_command(cmd_string)
 registry.register(XrandrExecutor)
 
 
@@ -39,6 +46,7 @@ class ConfigureDisplaysExecutor(Executor):
             mode: "1920x1080"
             position: "0x0" | left-of <ID> | right-of <ID> | below <ID> | above <ID>
             rotate: "normal"
+            auto: true
         :type display: domain.Display
         :param config_def:
         :return:
@@ -58,6 +66,8 @@ class ConfigureDisplaysExecutor(Executor):
                 res.append('--{} {}'.format(match.group('location'), match.group('id')))
         if 'primary' in config_def and config_def['primary']:
             res.append('--primary')
+        if 'auto' in config_def and config_def['auto']:
+            res.append('--auto')
         return ' '.join(res)
 
     def execute(self, configuration, system_state):
@@ -72,7 +82,7 @@ class ConfigureDisplaysExecutor(Executor):
             displays = system_state.default_screen.get_displays_by_wildcard(display_selector)
             for display in displays:
                 xrandr_conf += self.create_xrandr_screen_for_display(display, config_def) + ' '
-        print xrandr_conf
+        run_xrandr_command(xrandr_conf)
 
 registry.register(ConfigureDisplaysExecutor)
 

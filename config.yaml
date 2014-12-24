@@ -3,17 +3,35 @@ profiles:
     when:
       connected-only: "eDP1, HDMI1"
     then:
-      - xrandr: '--output eDP1 --off --output HDMI2 --off --output eDP1 --off --output VIRTUAL1 --off --output HDMI1 --auto'
+      - configure-displays:
+          "*":
+            state: "off"
+          HDMI1:
+            auto: true
   InternalDisplayOnly:
     when:
       connected-only: "eDP1"
     then:
-      - xrandr: '--output HDMI2 --off --output HDMI1 --off --output DP1 --off --output VIRTUAL1 --off --output eDP1 --auto'
+      - configure-displays:
+          "*":
+            state: "off"
+          eDP1:
+            auto: true
   2Monitors:
     when:
       connected: "eDP1, HDMI1, HDMI2"
     then:
-      - xrandr: '--output HDMI2 --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP1 --off --output eDP1 --off --output VIRTUAL1 --off'
+      - configure-displays:
+          "*":
+            state: "off"
+          HDMI1:
+            mode: "1920x1080"
+            position: '0x0'
+            primary: true
+          HDMI2:
+            mode: "1920x1080"
+            position: 'right-of HDMI1'
+            primary: true
 actions:
   setupInternalDisplayOnly:
     - execute-xrandr: '--auto'

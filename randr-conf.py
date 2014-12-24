@@ -20,7 +20,7 @@ if __name__ == '__main__':
         print "Initialization error:" + e.message
         exit(1)
     try:
-        configuration = parser.parse_config(file('./config-example.yaml', 'r'))
+        configuration = parser.parse_config(file('./config.yaml', 'r'))
     except InitializationError as e:
         print "Config error: " + e.message
         exit(2)
