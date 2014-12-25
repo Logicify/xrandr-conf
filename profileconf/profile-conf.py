@@ -3,12 +3,12 @@ import logging.config
 import os
 
 import yaml
+from profileconf import detector
 
-from repository import ApplicationContext
 import processor
 import parser
-from detector import Detector
 from errors import InitializationError
+from profileconf.repository import ApplicationContext
 
 
 __author__ = 'corvis'
@@ -25,7 +25,6 @@ if __name__ == '__main__':
         print "Config error: " + e.message
         exit(2)
     # Capturing current system state
-    detector = Detector()
     system_state = detector.capture_system_state()
     # Find matching profiles
     matching_profiles = processor.find_matching_profiles(system_state, configuration)

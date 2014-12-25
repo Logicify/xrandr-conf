@@ -3,7 +3,7 @@ from collections import OrderedDict
 import yaml
 
 from domain import Profile, Configuration
-from repository import ApplicationContext
+from profileconf.repository import ApplicationContext
 
 __author__ = 'corvis'
 

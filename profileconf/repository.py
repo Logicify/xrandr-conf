@@ -8,7 +8,6 @@ import os
 
 __author__ = 'corvis'
 
-
 class ExecutorsRegistry(object):
     def __init__(self):
         self.executors = {}
@@ -85,10 +84,13 @@ class ApplicationContext(object):
             raise InitializationError("Unable to load module \"{}\" ({})".format(module_name, path))
         self.__logger.info("Loading module {} ...".format(module.name if module is not None else module_name))
         # Construct the class and load module
+        self.modules.append(module)
         for x in module.condition_handlers:
             self.conditions_repository.register(x)
         for x in module.executors:
             self.executors_repository.register(x)
+        if module.system_state_detector is not None:
+            self.__logger.info(' --> Registered system state detector: {}'.format(module.system_state_detector.__class__.__name__))
         self.__logger.info("Module loaded: {}".format(module.name if module is not None else module_name))
         return True
 

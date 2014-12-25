@@ -78,10 +78,11 @@ class ConfigureDisplaysExecutor(Executor):
         :return:
         """
         super(ConfigureDisplaysExecutor, self).execute(configuration, system_state)
+        display_system_state = system_state.get_section('display')
         xrandr_conf = ''
         # We expect to get the list of devices
         for display_selector, config_def in self.definition.items():
-            displays = system_state.default_screen.get_displays_by_wildcard(display_selector)
+            displays = display_system_state.default_screen.get_displays_by_wildcard(display_selector)
             for display in displays:
                 local_context = {
                     "current_display": display

@@ -22,7 +22,7 @@ class MonitorConnectedCondition(Condition):
         """
         :type current_system_state: domain.SystemState
         """
-        screen = current_system_state.default_screen
+        screen = current_system_state.get_section('display').default_screen
         # Should be TRUE if all of the displays are connected
         for x in self.display_id_list:
             display_state = screen.get_display(x)
