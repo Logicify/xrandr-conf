@@ -1,7 +1,9 @@
 from __future__ import unicode_literals
 
 from ctypes import *
-from lib_pulseaudio import *
+
+from profileconf.modules.pulseaudio.tools.lib_pulseaudio import *
+
 
 __version__ = '0.1.0'
 

@@ -8,6 +8,7 @@ import os
 
 __author__ = 'corvis'
 
+
 class ExecutorsRegistry(object):
     def __init__(self):
         self.executors = {}

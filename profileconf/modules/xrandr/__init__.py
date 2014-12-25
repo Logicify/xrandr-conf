@@ -9,7 +9,7 @@ __author__ = 'corvis'
 class XrandrModule(Module):
     def __init__(self):
         super(XrandrModule, self).__init__()
-        self.name = "Xrandr"
+        self.name = "xrandr"
         self.description = "Utilize display management capabilities"
         self.set_system_state_detector(DisplayStateDetector)
         self.add_condition_handler(MonitorConnectedCondition)
