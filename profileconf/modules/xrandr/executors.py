@@ -1,8 +1,6 @@
 import re
-
-from . import Executor, registry
-from src.tools.xrandr import run_xrandr_command
-
+from profileconf.executor import Executor
+from tools import run_xrandr_command
 
 __author__ = 'corvis'
 
@@ -17,9 +15,6 @@ class XrandrExecutor(Executor):
     def execute(self, configuration, system_state):
         super(XrandrExecutor, self).execute(configuration, system_state)
         run_xrandr_command(self.cmd_options)
-
-
-registry.register(XrandrExecutor)
 
 
 class ConfigureDisplaysExecutor(Executor):
@@ -76,7 +71,6 @@ class ConfigureDisplaysExecutor(Executor):
         self.register_preprocessor('preferredResolution',
                                    lambda arg, context: context.get('current_display').preferred_mode.resolution)
 
-
     def execute(self, configuration, system_state):
         """
         :type configuration: domain.Configuration
@@ -97,11 +91,3 @@ class ConfigureDisplaysExecutor(Executor):
                                                                                                  local_context)) + ' '
         #print xrandr_conf
         run_xrandr_command(xrandr_conf)
-
-
-registry.register(ConfigureDisplaysExecutor)
-
-
-
-
-

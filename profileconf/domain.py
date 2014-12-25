@@ -1,6 +1,46 @@
 __author__ = 'corvis'
 
 
+class Module(object):
+    def __init__(self):
+        self.__system_state_detector = None
+        self.__config_parser = None
+        self.__condition_handlers = []
+        self.__executors = []
+        self.name = None
+        self.description = None
+
+
+    # TODO: Type validation!
+
+    def set_system_state_detector(self, detector_cls):
+        self.__system_state_detector = detector_cls
+
+    def set_config_parser(self, parser_cls):
+        self.__config_parser = parser_cls
+
+    def add_condition_handler(self, condition_cls):
+        self.__condition_handlers.append(condition_cls)
+
+    def add_executor(self, condition_cls):
+        self.__executors.append(condition_cls)
+
+    @property
+    def condition_handlers(self):
+        return self.__condition_handlers
+
+    @property
+    def executors(self):
+        return self.__executors
+
+    @property
+    def config_parser(self):
+        return self.__config_parser
+
+    def system_state_detector(self):
+        return self.__system_state_detector
+
+
 class Screen(object):
 
     def __init__(self):
@@ -63,6 +103,7 @@ class Display(object):
                                                                                   self.primary, self.resolution,
                                                                                   self.is_active)
 
+
 class DisplayMode(object):
     def __init__(self):
         self.resolution = None
@@ -75,6 +116,7 @@ class DisplayMode(object):
 
     def __unicode__(self):
         return self.__str__()
+
 
 class SystemState(object):
     def __init__(self):

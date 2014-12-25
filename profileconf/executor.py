@@ -1,15 +1,9 @@
 import copy
-import logging
-import pkgutil
 import re
-
-from src.errors import InitializationError
-
 
 __author__ = 'corvis'
 
 _EXPRESSION_REGEX = re.compile('\$(?P<name>\w[\d\w]*)(?P<is_func>\((?P<arg>.*?)?\))?')
-
 
 class Executor(object):
     name = None
@@ -92,33 +86,3 @@ class Executor(object):
         :return:
         """
         self.initialize_context(configuration, system_state)
-
-
-class ExecutorsRegistry(object):
-    def __init__(self):
-        self.executors = {}
-        self.__logger = logging.getLogger('ExecutorsRegistry')
-
-    def register(self, executor_cls):
-        if executor_cls.name in self.executors:
-            raise InitializationError('This executor ({}) is already registered'.format(executor_cls.name))
-        if not issubclass(executor_cls, Executor):
-            raise InitializationError('Only subclasses of Executor can be registered')
-        executor_name = executor_cls.name
-        self.executors[executor_name] = executor_cls
-        self.__logger.info('Registered executor class "{}"'.format(executor_name))
-
-    def create_executor(self, executor_name, executor_def):
-        if executor_name not in self.executors:
-            raise InitializationError('Unknown executor \"{}\"'.format(executor_name))
-        condition_cls = self.executors[executor_name]
-        return condition_cls.build_from_def(executor_name, executor_def)
-
-    def autodiscover(self):
-        __all__ = []
-        for loader, module_name, is_pkg in pkgutil.walk_packages(__path__):
-            __all__.append(module_name)
-            __import__('.'.join((__name__, module_name)), globals(), locals())
-
-
-registry = ExecutorsRegistry()

@@ -1,4 +1,4 @@
-from . import Condition, registry
+from profileconf.condition import Condition
 
 __author__ = 'corvis'
 
@@ -31,6 +31,3 @@ class MonitorConnectedCondition(Condition):
         if self.strategy == MATCH_STRATEGY_EXACT:
             return len(self.display_id_list) == len(screen.get_connected_displays())
         return True
-
-
-registry.register(MonitorConnectedCondition)

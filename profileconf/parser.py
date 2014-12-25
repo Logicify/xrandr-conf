@@ -2,10 +2,8 @@ from collections import OrderedDict
 
 import yaml
 
-from src.conditions import registry as conditions_registry
-from executors import registry as executors_registry
 from domain import Profile, Configuration
-
+from repository import ApplicationContext
 
 __author__ = 'corvis'
 
@@ -39,6 +37,8 @@ def parse_config(config_stream):
     # Process "Profiles section"
     if 'profiles' not in config:
         raise Exception('\"profiles\" section is required')
+    conditions_registry = ApplicationContext.get().conditions_repository
+    executors_registry = ApplicationContext.get().executors_repository
     for profile_name, profileDef in config['profiles'].items():
         profile = Profile()
         profile.name = profile_name

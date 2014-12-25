@@ -7,6 +7,10 @@ root:
 loggers:
   ConditionRegistry:
     level: DEBUG
+  ExecutorsRegistry:
+    level: DEBUG
+  Bootstrap:
+    level: DEBUG
 
 formatters:
   default:
