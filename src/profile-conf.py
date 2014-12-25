@@ -1,5 +1,6 @@
 import logging
 import logging.config
+import os
 
 import yaml
 
@@ -7,7 +8,7 @@ import yaml
 __author__ = 'corvis'
 
 if __name__ == '__main__':
-    logging.config.dictConfig(yaml.load(file('./logger.yaml', 'r')))
+    logging.config.dictConfig(yaml.load(file(os.path.join(os.path.dirname(__file__), 'logger.yaml'), 'r')))
     from src import conditions, processor, executors, parser
     from src.detector import Detector
     from src.errors import InitializationError

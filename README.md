@@ -1,4 +1,4 @@
-xrandr-conf
+profile-conf
 ===========
 
 Simple DE independent utility for managing managing different system configurations depending on conditions.
@@ -22,9 +22,9 @@ Basically all you need is to define how exactly you would like to configure your
 _current system state_.
 Let's call this **Profile**. Profile contains of 2 parts: conditions which must be satisfied to activate this profile 
 and actual system configuration which should be applied when profile is activated. 
-xrandr-conf will find suitable profiles for current system state and apply configuration for each one.
+profile-conf will find suitable profiles for current system state and apply configuration for each one.
 
-Let's look on the xrandr-conf configuration file which defines profiles for examples from previous section.
+Let's look on the profile-conf configuration file which defines profiles for examples from previous section.
 
 ```yaml
 profiles:
@@ -67,8 +67,8 @@ Usage
 -----
 
 1. The first thing you need is config file describing your profiles (Documentation is not available yet, sorry)
-2. Run ```xrandr-conf``` each time you need to change profile or add _udev_ rule call it automatically.
-3. Optionally bind some global keyboard hotkey to run ```xrandr-conf``` executable. This can be pretty handy.
+2. Run ```profile-conf``` each time you need to change profile or add _udev_ rule to call it automatically.
+3. Optionally bind some global keyboard hotkey to run ```profile-conf``` executable. This can be pretty handy.
 
 Disclaimer
 ----------

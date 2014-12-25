@@ -1,4 +1,4 @@
 #!/bin/sh
 APP_EXECUTABLE=`readlink -f $0`
 cd $(dirname "$APP_EXECUTABLE")
-python randr-conf.py $@
+python src/profile-conf.py $@

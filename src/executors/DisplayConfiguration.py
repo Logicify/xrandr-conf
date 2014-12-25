@@ -1,21 +1,10 @@
-from . import Executor, registry
-import subprocess
 import re
 
+from . import Executor, registry
+from src.tools.xrandr import run_xrandr_command
+
+
 __author__ = 'corvis'
-
-XRANDR_EXECUTABLE = 'xrandr'
-
-
-def run_xrandr_command(args):
-    cmd_string = ' '.join([XRANDR_EXECUTABLE, args])
-    p = subprocess.Popen(cmd_string, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    p.wait()
-    errors = '\n'.join(p.stderr.readline()).strip()
-    res = p.stdout.readline()
-    if len(errors) > 0:
-        raise Exception(errors)
-    return True
 
 
 class XrandrExecutor(Executor):
@@ -27,8 +16,7 @@ class XrandrExecutor(Executor):
 
     def execute(self, configuration, system_state):
         super(XrandrExecutor, self).execute(configuration, system_state)
-        cmd_string = ' '.join([self.xrandrExecutable, self.cmd_options])
-        run_xrandr_command(cmd_string)
+        run_xrandr_command(self.cmd_options)
 
 
 registry.register(XrandrExecutor)
