@@ -26,6 +26,25 @@ profiles:
       connected: "eDP1, HDMI1, HDMI2"
     then:
       - xrandr: '--output HDMI2 --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP1 --off --output eDP1 --off --output VIRTUAL1 --off'
+
+  # ------------------------
+  # PULSEAUDIO CONFIGURATION
+  # ------------------------
+  WirelessHeadsetConnected:
+    when:
+      - pulseaudio-available: 'H600*'
+    then:
+      - configure-pulseaudio:
+        '$findPulseAudioOutput(H600)':
+          default: True
+  WirelessHeadsetDisconnected:
+    when:
+      - pulseaudio-available: '$not(H600*)'
+    then:
+      - configure-pulseaudio:
+        '$findPulseAudioOutput(Built-in)':
+          default: True
+          port: $findPulseAudioPort(Headset)
 actions:
   setupInternalDisplayOnly:
     - execute-xrandr: '--auto'
