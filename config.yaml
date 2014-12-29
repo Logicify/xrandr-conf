@@ -16,7 +16,9 @@ profiles:
           "*":
             state: "off"
           eDP1:
-            auto: true
+            mode: "1920x1080"
+            position: '0x0'
+            primary: true
   2Monitors:
     when:
       connected: "eDP1, HDMI1, HDMI2"

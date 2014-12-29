@@ -91,7 +91,7 @@ class ApplicationContext(object):
         for x in module.executors:
             self.executors_repository.register(x)
         if module.system_state_detector is not None:
-            self.__logger.info(' --> Registered system state detector: {}'.format(module.system_state_detector.__class__.__name__))
+            self.__logger.info(' --> Registered system state detector: {}'.format(module.system_state_detector.__name__))
         self.__logger.info("Module loaded: {}".format(module.name if module is not None else module_name))
         return True
 

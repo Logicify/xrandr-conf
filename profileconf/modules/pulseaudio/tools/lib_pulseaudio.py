@@ -241,6 +241,9 @@ PA_CHANNEL_POSITION_AUX10 = 22
 PA_SEEK_RELATIVE = 0
 PA_SAMPLE_S16LE = 3
 PA_IO_EVENT_NULL = 0
+PA_PORT_AVAILABLE_UNKNOWN = 0
+PA_PORT_AVAILABLE_NO = 1
+PA_PORT_AVAILABLE_YES = 2
 
 # values for enumeration 'pa_channel_position'
 pa_channel_position = c_int # enum
@@ -597,6 +600,7 @@ pa_sink_port_info._fields_ = [
     ('name', STRING),
     ('description', STRING),
     ('priority', uint32_t),
+    ('available', c_int),
 ]
 class pa_sink_info(Structure):
     pass
@@ -678,6 +682,7 @@ pa_source_port_info._fields_ = [
     ('name', STRING),
     ('description', STRING),
     ('priority', uint32_t),
+    ('available', c_int),
 ]
 class pa_source_info(Structure):
     pass

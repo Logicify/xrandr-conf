@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from ctypes import *
 
 from profileconf.modules.pulseaudio.tools.lib_pulseaudio import *
+from profileconf.modules.pulseaudio.tools.lib_pulseaudio import PA_PORT_AVAILABLE_YES, PA_PORT_AVAILABLE_NO
 
 
 __version__ = '0.1.0'
@@ -591,6 +592,18 @@ class PulseAudio(object):
         ret['n_volume_steps'] = sink_info.contents.n_volume_steps
         ret['state'] = sink_info.contents.state
         ret['desc'] = sink_info.contents.description
+        ret['ports'] = []
+        ret['active_port'] = None
+        for i in range(0, sink_info.contents.n_ports):
+            port = sink_info.contents.ports[i]
+            port_info = {}
+            port_info['name'] = port.contents.name
+            port_info['desc'] = port.contents.description
+            port_info['priority'] = port.contents.priority
+            port_info['available'] = port.contents.available != PA_PORT_AVAILABLE_NO
+            ret['ports'].append(port_info)
+            if sink_info.contents.active_port.contents.name == port.contents.name:
+                ret['active_port'] = port.contents.name
         return (ret, False)
 
     @callback
@@ -607,6 +620,18 @@ class PulseAudio(object):
         ret['configured_latency'] = source_info.contents.configured_latency
         ret['monitor_of_sink'] = source_info.contents.monitor_of_sink
         ret['monitor_of_sink_name'] = source_info.contents.monitor_of_sink_name
+        ret['ports'] = []
+        ret['active_port'] = None
+        for i in range(0, source_info.contents.n_ports):
+            port = source_info.contents.ports[i]
+            port_info = {}
+            port_info['name'] = port.contents.name
+            port_info['desc'] = port.contents.description
+            port_info['priority'] = port.contents.priority
+            port_info['available'] = port.contents.available != PA_PORT_AVAILABLE_NO
+            ret['ports'].append(port_info)
+            if source_info.contents.active_port.contents.name == port.contents.name:
+                ret['active_port'] = port.contents.name
         return (ret, False)
 
     @callback
