@@ -6,8 +6,12 @@ __author__ = 'corvis'
 def __build_restricted_list_from_string(restriction):
     def func(items_str, context):
         items = []
-        for x in items_str.split(','):
-            items.append(x.strip())
+        assert isinstance(items_str, basestring) or isinstance(items_str, list), 'Argument should be of type string'
+        if isinstance(items_str, basestring):
+            for x in items_str.split(','):
+                items.append(x.strip())
+        else:
+             items = items_str
         return RestrictedList(items, restriction=restriction)
     return func
 

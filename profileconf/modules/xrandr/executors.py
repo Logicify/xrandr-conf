@@ -15,7 +15,7 @@ class XrandrExecutor(Executor):
 
     def execute(self, configuration, system_state):
         super(XrandrExecutor, self).execute(configuration, system_state)
-        #run_xrandr_command(self.cmd_options)
+        run_xrandr_command(self.cmd_options)
 
 
 class ConfigureDisplaysExecutor(Executor):
@@ -91,4 +91,4 @@ class ConfigureDisplaysExecutor(Executor):
                                                                      self.preprocess_user_object(config_def,
                                                                                                  local_context)) + ' '
         print xrandr_conf
-        #run_xrandr_command(xrandr_conf)
+        run_xrandr_command(xrandr_conf)

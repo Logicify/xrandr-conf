@@ -6,7 +6,6 @@ __author__ = 'corvis'
 
 class MonitorConnectedCondition(Condition):
     name = 'connected'
-    aliases = ['connected-only']
 
     def __init__(self):
         super(MonitorConnectedCondition, self).__init__()
