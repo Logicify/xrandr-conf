@@ -1,5 +1,6 @@
 import re
 from profileconf.executor import Executor
+from profileconf.modules.xrandr import context
 from tools import run_xrandr_command
 
 __author__ = 'corvis'
@@ -14,7 +15,7 @@ class XrandrExecutor(Executor):
 
     def execute(self, configuration, system_state):
         super(XrandrExecutor, self).execute(configuration, system_state)
-        run_xrandr_command(self.cmd_options)
+        #run_xrandr_command(self.cmd_options)
 
 
 class ConfigureDisplaysExecutor(Executor):
@@ -68,8 +69,7 @@ class ConfigureDisplaysExecutor(Executor):
 
     def initialize_context(self, configuration, system_state):
         # this one expects to have "current_display" in context
-        self.register_preprocessor('preferredResolution',
-                                   lambda arg, context: context.get('current_display').preferred_mode.resolution)
+        self.register_context_function(context.predefined_resolution)
 
     def execute(self, configuration, system_state):
         """
@@ -90,5 +90,5 @@ class ConfigureDisplaysExecutor(Executor):
                 xrandr_conf += self.create_xrandr_screen_for_display(display,
                                                                      self.preprocess_user_object(config_def,
                                                                                                  local_context)) + ' '
-        #print xrandr_conf
-        run_xrandr_command(xrandr_conf)
+        print xrandr_conf
+        #run_xrandr_command(xrandr_conf)

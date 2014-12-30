@@ -39,10 +39,12 @@ def parse_config(config_stream):
         raise Exception('\"profiles\" section is required')
     conditions_registry = ApplicationContext.get().conditions_repository
     executors_registry = ApplicationContext.get().executors_repository
-    for profile_name, profileDef in config['profiles'].items():
+    for profile_id, profileDef in config['profiles'].items():
         profile = Profile()
-        profile.name = profile_name
-        config_obj.profiles[profile_name] = profile
+        profile.id = profile_id
+        profile.name = profileDef.get('name')
+        profile.keywords = profileDef.get('keywords', [])
+        config_obj.profiles[profile_id] = profile
         # Is there any conditions?
         if 'when' in profileDef:
             # Iterate though conditions
