@@ -29,8 +29,9 @@ Let's look on the profile-conf configuration file which defines profiles for exa
 ```yaml
 profiles:
   SingleExternalMonitor:
+    name: "External monitor"
     when:
-      connected-only: "eDP1, HDMI1"
+      connected: "$only(eDP1, HDMI1)"
     then:
       - configure-displays:
           "*":
@@ -39,26 +40,28 @@ profiles:
             mode: '$preferredResolution'
   InternalDisplayOnly:
     when:
-      connected-only: "eDP1"
+      connected: "$only(eDP1)"
     then:
       - configure-displays:
           "*":
             state: "off"
           eDP1:
-            auto: true
+            mode: "$preferredResolution"
+            position: '0x0'
+            primary: true
   2Monitors:
     when:
-      connected: "eDP1, HDMI1, HDMI2"
+      connected: "HDMI1, HDMI2"
     then:
       - configure-displays:
           "*":
             state: "off"
           HDMI1:
-            mode: "1920x1080"
+            mode: "$preferredResolution"
             position: '0x0'
             primary: true
           HDMI2:
-            mode: "1920x1080"
+            mode: "$preferredResolution"
             position: 'right-of HDMI1'
             primary: true
 ```

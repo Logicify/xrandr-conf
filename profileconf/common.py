@@ -48,7 +48,7 @@ class ContextSupport(object):
         match = _EXPRESSION_REGEX.search(result)
         while match is not None:
             expression_value = None
-            self.__context_logger.info(_logger_output_padding + 'Evaluating expression "{}"'.format(match.group(0)))
+            self.__context_logger.debug(_logger_output_padding + 'Evaluating expression "{}"'.format(match.group(0)))
             # try to find value or callable in interpolation map
             expression_name = match.group('name')
             if expression_name not in self.__interpolation_map:
@@ -62,7 +62,7 @@ class ContextSupport(object):
             # apply interpolation on the argument
             argument = self.user_value(match.group('arg'), context, _recursion_level=_recursion_level + 1)
             expression_value = context_function.invoke(argument, context)
-            self.__context_logger.info(_logger_output_padding + '  Result: {}'.format(expression_value))
+            self.__context_logger.debug(_logger_output_padding + '  Result: {}'.format(expression_value))
             if len(result) == len(match.group(0)):
                 result = expression_value
                 break
