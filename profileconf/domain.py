@@ -168,13 +168,13 @@ class RestrictedList(list):
         :return:
         """
         if self.restriction == RestrictedList.ALL:
-            for x in collection:
-                if x not in self:
+            for x in self:
+                if x not in collection:
                     return False
             return True
         elif self.restriction == RestrictedList.ANY_OF:
-            for x in collection:
-                if x in self:
+            for x in self:
+                if x in collection:
                     return True
             return False
         elif self.restriction == RestrictedList.ONLY:

@@ -31,8 +31,11 @@ def yaml_dump_ordered_dict_support(data, stream=None, Dumper=yaml.Dumper, **kwds
     return yaml.dump(data, stream, OrderedDumper, **kwds)
 
 
-def parse_config(config_stream):
-    config = yaml_load_ordered_dict_support(config_stream)
+def config_to_dict(config_stream):
+    return yaml_load_ordered_dict_support(config_stream)
+
+
+def parse_config(config):
     config_obj = Configuration()
     # Process "Profiles section"
     if 'profiles' not in config:

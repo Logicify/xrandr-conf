@@ -1,4 +1,4 @@
 #!/bin/sh
 APP_EXECUTABLE=`readlink -f $0`
-cd $(dirname "$APP_EXECUTABLE")
-python src/profile-conf.py $@
+MAIN_MODULE_PATH="$(dirname $(dirname "$APP_EXECUTABLE"))"
+PYTHONPATH="$PATHONPATH:$MAIN_MODULE_PATH" python -m profileconf $@
